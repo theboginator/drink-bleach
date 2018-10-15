@@ -1,0 +1,6 @@
+[package]
+name = "drinkbleach"
+version = "0.1.0"
+authors = ["jbogner"]
+
+[dependencies]
