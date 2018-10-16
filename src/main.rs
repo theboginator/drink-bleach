@@ -14,4 +14,5 @@ fn main() {
         .expect("something went wrong reading the file");
 
     println!("With text:\n{}", contents);
+    println!("Pls drink bleach and kill yourself.");
 }
