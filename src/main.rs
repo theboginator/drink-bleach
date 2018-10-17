@@ -1,7 +1,12 @@
+//This program reads a file name (set by variable "filename") and counts all the words in
+//the .txt file. Prints output to the screen. Default text file is shrek.txt (located in assets)
+//Jacob Bogner October 2018 v0.89
+//Coming soon: implementing printing results to .txt file and prompting user to enter filename via command line.
 use std::fs;
-use std::fs::File;
 use std::io::prelude::*;
 use std::collections::HashMap;
+use std::fs::File;
+
 
 fn main() {
     // --snip--
@@ -22,39 +27,35 @@ fn main() {
     f.read_to_string(&mut contents)
         .expect("something went wrong reading the file");
 
-    let mut wordCount = word_count(&contents);
+    let mut word_count = word_count(&contents);
 
-    for (key, value) in wordCount{
+    for (key, value) in word_count{
         println!("{} : {}", key, value);
     }
-
-    println!("Pls drink bleach and kill yourself.");
 }
 
-fn countWords(mut hashMap: HashMap<String, u32>, word: String) -> HashMap<String, u32> {
+fn count_words(mut word_map: HashMap<String, u32>, word: String) -> HashMap<String, u32> {
     {
-        let c = hashMap.entry(word).or_insert(0);
+        let c = word_map.entry(word).or_insert(0);
         *c += 1;
     }
 
-    hashMap
+    word_map
 }
 
-fn word_count(sentence: &String) -> HashMap<String, u32> {
-    let mut hashMap = sentence.split(|c: char| !c.is_alphanumeric())
+fn word_count(word_string: &String) -> HashMap<String, u32> {
+    let mut word_map = word_string.split(|c: char| !c.is_alphanumeric())
         .filter(|w| !w.is_empty())
         .map(|w| w.to_lowercase())
-        .fold(HashMap::new(), countWords);
-    return hashMap;
+        .fold(HashMap::new(), count_words);
+    return word_map;
 }
 
-fn writeResults(mut hashMap: HashMap<String, u32>, filename: &str) {
-    let mut outputDir = format!("assets/indexed_text/counted_{}", filename);
-    let mut outputFile = File::create(outputDir);
+fn writeResults(mut word_map: HashMap<String, u32>, filename: &str) {
+//    let mut output_directory = format!("assets/indexed_text/counted_{}", filename);
+//    let mut output_file = File::create(output_directory);
 
-    for (key, value) in hashMap{
-        let mut result = format!("{} : {}", key, value);
-        write!(outputFile, "{}", result);
-    }
-
+//    for (key, value) in word_map{
+//        output_file.write_all("{} : {}", key, value);
+//    }
 }
